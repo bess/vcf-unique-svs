@@ -7,4 +7,4 @@ Pull unique structural variants out of a VCF (Variant Call Format) file
 3. Install python: `asdf install`
 4. Install pip: `python setup/get-pip.py`
 5. Install pip requirements: `pip install -r requirements.txt`
-6. Run the test suite: `pytest`
+6. Run the test suite: `pytest -s`
