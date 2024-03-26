@@ -7,7 +7,7 @@ Given a VCF file:
   3. Into each output file, place only the variants unique to this sample id (i.e., exclude anything that is common, because that won't be a likely culprit for clinical significance.)
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/bess/vcf-unique-svs/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bess/vcf-unique-svs/tree/main)
-
+[![Coverage Status](https://coveralls.io/repos/github/bess/vcf-unique-svs/badge.svg?branch=main)](https://coveralls.io/github/bess/vcf-unique-svs?branch=main)
 
 ## Local Development
 1. Install [asdf](https://asdf-vm.com/guide/getting-started.html) for dependencies management
