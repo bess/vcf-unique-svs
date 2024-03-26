@@ -22,7 +22,7 @@ jobs:
           command: "pip install -r requirements.txt"
       - run:
           name: "Run tests"
-          command: "pytest -s"
+          command: "COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN coverage run --source=src -m pytest tests/"
 
 workflows:
   ci: 
