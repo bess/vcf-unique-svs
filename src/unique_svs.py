@@ -5,6 +5,7 @@ import os
 import pdb
 import csv
 
+
 # Given a VCF file (https://en.wikipedia.org/wiki/Variant_Call_Format):
 # 1. Determine the sample ids referenced in this file (these can vary in name and number)
 # 2. Create a separate output VCF file for each sample id
@@ -24,7 +25,7 @@ class UniqueSvs:
         columns = np.array(self.dataframe.columns)
         sampleIDs = set(columns) - set(UniqueSvs.columns2exclude)
         return sampleIDs
-    
+
     def output_dir_name(self):
         return Path(self.filename).stem + "_unique_svs"
 
@@ -48,10 +49,10 @@ class UniqueSvs:
                 continue
 
             # If this sample ID has unique variants, output them to their own vcf file
-            output_file = self.output_dir_name() + '/' + sample + '_unique.tsv'
-            file = open(output_file, 'w')
-            tsv_writer = csv.writer(file, delimiter='\t')
-            matching_lines.to_csv(file, sep='\t', index=False)
+            output_file = self.output_dir_name() + "/" + sample + "_unique.tsv"
+            file = open(output_file, "w")
+            tsv_writer = csv.writer(file, delimiter="\t")
+            matching_lines.to_csv(file, sep="\t", index=False)
             file.close()
 
     columns2exclude = [
