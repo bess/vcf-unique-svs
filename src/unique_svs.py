@@ -5,7 +5,6 @@ import os
 import pdb
 import csv
 
-
 # Given a VCF file (https://en.wikipedia.org/wiki/Variant_Call_Format):
 # 1. Determine the sample ids referenced in this file (these can vary in name and number)
 # 2. Create a separate output VCF file for each sample id
@@ -34,6 +33,26 @@ class UniqueSvs:
         output_dir = self.output_dir_name()
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
+
+    # Create a separate output VCF file for each sample id
+    # Into each output file, place only the variants for which this sample id is a 1/0
+    def export(self):
+        self.create_output_dir()
+        for sample in self.sample_ids():
+            # only returns lines from the pandas dataframe where the SampleID field matches the sample ID exactly
+            # i.e., it will not match if there are multiple sample ids for a given variant
+            matching_lines = self.dataframe[self.dataframe.Samples_ID == sample]
+
+            # Not all SampleIDs will have unique variants
+            if matching_lines.index.empty:
+                continue
+
+            # If this sample ID has unique variants, output them to their own vcf file
+            output_file = self.output_dir_name() + '/' + sample + '_unique.tsv'
+            file = open(output_file, 'w')
+            tsv_writer = csv.writer(file, delimiter='\t')
+            matching_lines.to_csv(file, sep='\t', index=False)
+            file.close()
 
     columns2exclude = [
         "AnnotSV_ID",

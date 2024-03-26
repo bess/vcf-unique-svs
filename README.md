@@ -1,5 +1,10 @@
 # vcf-unique-svs
-Pull unique structural variants out of a VCF ([Variant Call Format](https://en.wikipedia.org/wiki/Variant_Call_Format)) file
+Create individual [Variant Call Format](https://en.wikipedia.org/wiki/Variant_Call_Format) (VCF) files from multisample VCFs with unique variants.
+
+Given a VCF file:
+  1. Determine the sample ids referenced in this file (these will vary in name and number)
+  2. Create a separate output VCF file for each sample id iff the sample id has unique variants
+  3. Into each output file, place only the variants unique to this sample id (i.e., exclude anything that is common, because that won't be a likely culprit for clinical significance.)
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/bess/vcf-unique-svs/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bess/vcf-unique-svs/tree/main)
 
