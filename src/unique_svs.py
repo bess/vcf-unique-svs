@@ -1,5 +1,7 @@
 import pandas as pd
+from pathlib import Path
 import numpy as np
+import os
 import pdb
 import csv
 
@@ -13,6 +15,7 @@ import csv
 class UniqueSvs:
     # Pass in a VCF file, and read it in as a tab delimited CSV.
     def __init__(self, file: str) -> None:
+        self.filename = file
         self.dataframe = pd.read_csv(file, sep="\t")
         pass
 
@@ -22,6 +25,15 @@ class UniqueSvs:
         columns = np.array(self.dataframe.columns)
         sampleIDs = set(columns) - set(UniqueSvs.columns2exclude)
         return sampleIDs
+    
+    def output_dir_name(self):
+        return Path(self.filename).stem + "_unique_svs"
+
+    # Create a directory where the output will be written
+    def create_output_dir(self):
+        output_dir = self.output_dir_name()
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
 
     columns2exclude = [
         "AnnotSV_ID",
