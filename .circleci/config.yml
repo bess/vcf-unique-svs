@@ -21,8 +21,8 @@ jobs:
           name: "Install requirements"
           command: "pip install -r requirements.txt"
       - run:
-          name: "Run tests"
-          command: "pytest -s"
+          name: "Run tests and measure coverage"
+          command: "coverage run --source=src -m pytest tests/ && coveralls"
 
 workflows:
   ci: 
