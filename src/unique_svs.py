@@ -1,5 +1,7 @@
 import pandas as pd
+from pathlib import Path
 import numpy as np
+import os
 import pdb
 import csv
 
@@ -13,6 +15,7 @@ import csv
 class UniqueSvs:
     # Pass in a VCF file, and read it in as a tab delimited CSV.
     def __init__(self, file: str) -> None:
+        self.filename = file
         self.dataframe = pd.read_csv(file, sep="\t")
         pass
 
@@ -22,6 +25,35 @@ class UniqueSvs:
         columns = np.array(self.dataframe.columns)
         sampleIDs = set(columns) - set(UniqueSvs.columns2exclude)
         return sampleIDs
+
+    def output_dir_name(self):
+        return Path(self.filename).stem + "_unique_svs"
+
+    # Create a directory where the output will be written
+    def create_output_dir(self):
+        output_dir = self.output_dir_name()
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+    # Create a separate output VCF file for each sample id
+    # Into each output file, place only the variants for which this sample id is a 1/0
+    def export(self):
+        self.create_output_dir()
+        for sample in self.sample_ids():
+            # only returns lines from the pandas dataframe where the SampleID field matches the sample ID exactly
+            # i.e., it will not match if there are multiple sample ids for a given variant
+            matching_lines = self.dataframe[self.dataframe.Samples_ID == sample]
+
+            # Not all SampleIDs will have unique variants
+            if matching_lines.index.empty:
+                continue
+
+            # If this sample ID has unique variants, output them to their own vcf file
+            output_file = self.output_dir_name() + "/" + sample + "_unique.tsv"
+            file = open(output_file, "w")
+            tsv_writer = csv.writer(file, delimiter="\t")
+            matching_lines.to_csv(file, sep="\t", index=False)
+            file.close()
 
     columns2exclude = [
         "AnnotSV_ID",
