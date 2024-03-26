@@ -1,5 +1,5 @@
 # vcf-unique-svs
-Pull unique structural variants out of a VCF (Variant Call Format) file
+Pull unique structural variants out of a VCF ([Variant Call Format](https://en.wikipedia.org/wiki/Variant_Call_Format)) file
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/bess/vcf-unique-svs/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/bess/vcf-unique-svs/tree/main)
 
